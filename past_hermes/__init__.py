@@ -114,6 +114,8 @@ def load_config() -> dict:
         "recall": file.get("recall") is not False,
         "ingest": file.get("ingest") is not False,
         "audience": str(file.get("audience") or "").strip(),
+        # A messaging gateway can serve several people, and past recalls as one identity.
+        "gateway": file.get("gateway") is True or os.environ.get("PAST_GATEWAY") == "1",
         "sittingMinutes": max(MIN_SITTING_MINUTES, int(sitting)) if isinstance(sitting, (int, float)) and sitting > 0
         else DEFAULT_SITTING_MINUTES,
     }
@@ -227,6 +229,13 @@ class PastMemoryProvider(MemoryProvider):
         self._client = PastClient(self._config)
         self._session_id = session_id
         self._platform = kwargs.get("platform") or "cli"
+        # A gateway session (Telegram, Slack...) carries the platform user it serves. Every user
+        # would recall and write as the one configured identity, so the provider stays off there
+        # unless the person running the gateway says it serves only them ("gateway": true).
+        if kwargs.get("user_id") and not self._config["gateway"]:
+            logger.info("past: off for gateway sessions; set \"gateway\": true in ~/.past/config.json if only you use it")
+            self._client = None
+            return
         # Cron prompts, memory flushes and subagents are not the person's conversation.
         self._write_enabled = kwargs.get("agent_context", "primary") not in {"cron", "flush", "subagent"}
         # A session a crash left on disk is sent now, as the other connectors do at session start.
@@ -267,7 +276,7 @@ class PastMemoryProvider(MemoryProvider):
 
     def sync_turn(self, user_content: str, assistant_content: str, *, session_id: str = "") -> None:
         """Kept on disk, not sent: a session that grows would otherwise be sent again every turn."""
-        if not self._write_enabled or not self._config.get("ingest") or not self._config.get("apiKey"):
+        if self._client is None or not self._write_enabled or not self._config.get("ingest") or not self._config.get("apiKey"):
             return
         session = session_id or self._session_id
         try:

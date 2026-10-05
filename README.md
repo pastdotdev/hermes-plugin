@@ -8,7 +8,7 @@ The agent can also search its memory with the `past_recall` tool.
 ## Install
 
 ```bash
-pip install past-hermes            # in the same environment as Hermes
+pip install "git+https://github.com/pastdotdev/hermes-plugin"   # in the same environment as Hermes
 hermes config set memory.provider past
 hermes past setup                  # your project key from the past.dev console, and who you are
 ```
@@ -28,6 +28,9 @@ the same `~/.past/config.json`. `PAST_API_URL` points it at a self-hosted past.
   the same redaction. A session is kept on this machine (`~/.past/hermes/`) while it runs and sent
   when it ends, is compacted or switched; one that a crash left behind is sent at the next start.
 - Cron runs, subagents and memory flushes are never sent.
+- **Messaging gateway (Telegram, Slack, Discord...):** off by default. past recalls as one
+  identity, so on a gateway that several people use, one person's memories would reach another.
+  If the gateway serves only you, set `"gateway": true` in `~/.past/config.json`.
 
 `"recall": false` or `"ingest": false` in `~/.past/config.json` turns either off.
 
