@@ -1,6 +1,6 @@
 """Settings shared by the provider and its CLI.
 
-Hermes imports cli.py on its own, without running the provider module, to list `hermes past`
+Hermes imports cli.py on its own, without running the provider module, to list `hermes pastdotdev`
 commands. Anything cli.py needs therefore lives here, in a sibling module it can import, rather
 than in the package's __init__.py.
 """
@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.1.1"
+VERSION = "0.2.0"
 DEFAULT_API_URL = "https://api.past.dev"
 # A session is cut into sittings where it went quiet this long, as the other connectors do: past
 # dates every memory at its data point's time, so a sitting is dated by its own first turn.

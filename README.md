@@ -9,11 +9,11 @@ The agent can also search its memory with the `past_recall` tool.
 
 ```bash
 pip install "git+https://github.com/pastdotdev/hermes-plugin"   # in the same environment as Hermes
-hermes config set memory.provider past
-hermes past setup                  # your project key from the past.dev console, and who you are
+hermes config set memory.provider pastdotdev
+hermes pastdotdev setup            # your project key from the past.dev console, and who you are
 ```
 
-`hermes memory setup` offers past too and runs the same steps. `hermes past status` shows the
+`hermes memory setup` offers pastdotdev too and runs the same steps. `hermes pastdotdev status` shows the
 connection and the last sessions sent. The environment works as well: `PAST_API_KEY`,
 `PAST_IDENTITY`.
 

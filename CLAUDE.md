@@ -1,7 +1,7 @@
 # past for Hermes: contributor guide
 
 A Hermes `MemoryProvider`, installed as a pip package through the `hermes_agent.memory_providers`
-entry point. The provider is `past_hermes/__init__.py`; `past_hermes/cli.py` adds `hermes past setup` and `hermes past status` (Hermes lists them while `past` is the active provider, and `hermes memory setup` runs the same setup). Standard library only. Setup writes the key to the shared `~/.past/config.json`, created `600`.
+entry point. The provider is `past_hermes/__init__.py`; `past_hermes/cli.py` adds `hermes pastdotdev setup` and `hermes pastdotdev status` (Hermes lists them while `pastdotdev` is the active provider, and `hermes memory setup` runs the same setup). Standard library only. Setup writes the key to the shared `~/.past/config.json`, created `600`.
 
 ## How it fits together
 
@@ -31,7 +31,7 @@ They are the Claude Code connector's (`CLAUDE.md` in github.com/pastdotdev/claud
    `hermes:<session>:<n>`; each is timed at its first turn.
 6. **Redact the query and the content alike.** Same patterns as the other connectors.
 7. **`~/.past` is private.** Files are created `600` in a `700` folder; the key is written only by
-   `hermes past setup`, into the shared config, and otherwise read from the environment.
+   `hermes pastdotdev setup`, into the shared config, and otherwise read from the environment.
 
 ## Contracts
 

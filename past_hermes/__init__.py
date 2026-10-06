@@ -159,7 +159,7 @@ class PastMemoryProvider(MemoryProvider):
 
     @property
     def name(self) -> str:
-        return "past"
+        return "pastdotdev"
 
     def is_available(self) -> bool:
         return bool(load_config()["apiKey"])
@@ -177,7 +177,7 @@ class PastMemoryProvider(MemoryProvider):
         ]
 
     def post_setup(self, hermes_home: str, config: dict) -> None:
-        """`hermes memory setup` hands over to the same wizard as `hermes past setup`."""
+        """`hermes memory setup` hands over to the same wizard as `hermes pastdotdev setup`."""
         from .cli import cmd_setup
         cmd_setup()
 

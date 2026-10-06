@@ -1,6 +1,6 @@
-"""`hermes past setup` and `hermes past status`.
+"""`hermes pastdotdev setup` and `hermes pastdotdev status`.
 
-Hermes imports this file on its own when `past` is the active memory provider, without running the
+Hermes imports this file on its own when `pastdotdev` is the active memory provider, without running the
 provider module, so it imports only the standard library and the sibling config.py.
 """
 
@@ -32,16 +32,16 @@ def check(api_url: str, api_key: str) -> str:
 
 
 def enable_provider() -> None:
-    """Sets memory.provider to past in Hermes' own configuration."""
+    """Sets memory.provider to pastdotdev in Hermes' own configuration."""
     try:
         from hermes_cli.config import load_config as load_hermes_config, save_config as save_hermes_config
         config = load_hermes_config()
         if not isinstance(config.get("memory"), dict):
             config["memory"] = {}
-        config["memory"]["provider"] = "past"
+        config["memory"]["provider"] = "pastdotdev"
         save_hermes_config(config)
     except Exception as error:
-        print(f"  Could not set memory.provider: {error}. Run: hermes config set memory.provider past")
+        print(f"  Could not set memory.provider: {error}. Run: hermes config set memory.provider pastdotdev")
 
 
 def cmd_setup(args=None) -> None:
@@ -69,14 +69,14 @@ def cmd_setup(args=None) -> None:
 
     config = load_config()
     if not config["apiKey"]:
-        print("\n  No key yet: get one in the past.dev console, then run hermes past setup again.\n")
+        print("\n  No key yet: get one in the past.dev console, then run hermes pastdotdev setup again.\n")
         return
     if config["apiUrl"].startswith("http://") and not config["apiUrl"].startswith(("http://localhost", "http://127.0.0.1")):
         print("  Warning: this address is plain http, so the key travels unencrypted.")
     result = check(config["apiUrl"], config["apiKey"])
     mark = "✓" if result == "connected" else "!"
     print(f"\n  {mark} {result} · identity: {config['identity'] or 'not set (recall is off)'}")
-    print("  Memory provider: past. Start a new session to use it.\n")
+    print("  Memory provider: pastdotdev. Start a new session to use it.\n")
 
 
 def cmd_status(args=None) -> None:
