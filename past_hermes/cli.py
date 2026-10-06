@@ -1,7 +1,7 @@
 """`hermes past setup` and `hermes past status`.
 
-Hermes loads this file by path when `past` is the active memory provider, so it imports only the
-standard library and the provider package's own helpers.
+Hermes imports this file on its own when `past` is the active memory provider, without running the
+provider module, so it imports only the standard library and the sibling config.py.
 """
 
 from __future__ import annotations
@@ -11,7 +11,7 @@ import json
 import urllib.error
 import urllib.request
 
-from . import DEFAULT_API_URL, VERSION, load_config, past_home, read_json, write_private
+from .config import DEFAULT_API_URL, VERSION, load_config, past_home, read_json, write_private
 
 
 def mask(key: str) -> str:
@@ -73,7 +73,9 @@ def cmd_setup(args=None) -> None:
         return
     if config["apiUrl"].startswith("http://") and not config["apiUrl"].startswith(("http://localhost", "http://127.0.0.1")):
         print("  Warning: this address is plain http, so the key travels unencrypted.")
-    print(f"\n  ✓ {check(config['apiUrl'], config['apiKey'])} · identity: {config['identity'] or 'not set (recall is off)'}")
+    result = check(config["apiUrl"], config["apiKey"])
+    mark = "✓" if result == "connected" else "!"
+    print(f"\n  {mark} {result} · identity: {config['identity'] or 'not set (recall is off)'}")
     print("  Memory provider: past. Start a new session to use it.\n")
 
 

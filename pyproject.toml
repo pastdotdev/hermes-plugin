@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "past-hermes"
-version = "0.1.0"
+version = "0.1.1"
 description = "past.dev memory for Hermes Agent: recall before each turn, conversations kept in past."
 readme = "README.md"
 license = {text = "MIT"}

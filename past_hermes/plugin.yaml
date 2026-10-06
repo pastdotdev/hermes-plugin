@@ -1,5 +1,5 @@
 name: past
-version: 0.1.0
+version: 0.1.1
 description: "past.dev: source-traced memory. Recall before each turn; conversations kept, cut into sittings."
 pip_dependencies: []
 requires_hermes: ">=0.21.0"
